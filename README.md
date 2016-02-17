@@ -27,12 +27,6 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough 
 
-> HINT: You can put a `walkthrough.gif` file in your project folder, add to git, and use the following syntax to embed it: 
- 
-> `![Video Walkthrough](walkthrough.gif)` 
- 
-> You can also upload your image to imgur.com and embed the link here.
-
 Here's a walkthrough of implemented user stories:
 
 ![Video Walkthrough](walkthrough.gif)
@@ -41,7 +35,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I did not encounter critical issues or big challenge that aren't possible to overcome using internet, reading documentation, watching tutorials, researching in stackoverflow.com. or taking some hours to read code and play with it, But I didn't implement one of the optional stories, this was the international support (currency symbol)
 
 ## License
 
