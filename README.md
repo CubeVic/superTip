@@ -25,6 +25,9 @@ The following **additional** features are implemented:
 * [X] implementing other UI elements
 * [X] Reset option  
 
+**Declare:**
+Icons made by Freepi  from  www.flaticon.com is licensed by CC 3.0 BY 
+
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
