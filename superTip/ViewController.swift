@@ -51,7 +51,8 @@ class ViewController: UIViewController, DataEnteredDelegate {
     var tipPorcentage:Double = Double()
     var billAmount:Double = Double()
     
-    var previousDate: [Int] = [Int]()
+    //var previousDate: [Int] = [Int]()
+    var previousDate: NSDate = NSDate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,27 +65,27 @@ class ViewController: UIViewController, DataEnteredDelegate {
         viewSplitTip1.alpha = 0
         textFieldBillAmount.becomeFirstResponder()
         
-        //get the current date
-        var newDate:[Int] = getDate()
-        //recover the last date where the bill was calculated
-        var previousDate: [Int] = [defaults.integerForKey("hour"),defaults.integerForKey("minute")]
-        
-        //check if the las bill was < 10 minutes
-        if newDate[0] == previousDate[0]{
-            if newDate[1] - previousDate[1]  < 10 {
-                self.viewService.alpha = 1
-                self.viewSplitServiceLeft.alpha = 1
-                self.viewSplitServiceRight.alpha = 1
-                self.viewTip.alpha = 1
-                self.viewTotalBill.alpha = 1
-                self.viewSplitTip1.alpha = 1
-                self.viewSplitTip1.alpha = 1
+        var temporal = defaults.objectForKey("Date")
+        if temporal == nil{
+            print("you are new in SuperTip")
+        }else{
+            previousDate = defaults.objectForKey("Date") as! NSDate
+            var dif = NSDate().timeIntervalSinceDate(previousDate)
+            if Int(dif) < 600 {
+                print("i made it")
+                viewService.alpha = 1
+                viewSplitServiceLeft.alpha = 1
+                viewSplitServiceRight.alpha = 1
+                viewTip.alpha = 1
+                viewTotalBill.alpha = 1
+                viewSplitTip1.alpha = 1
+                viewSplitTip1.alpha = 1
                 textFieldBillAmount.text = String(defaults.valueForKey("bill")!)
                 billAmount = defaults.doubleForKey("bill")
                 stepperNumberPeople.value = defaults.doubleForKey("numberPerson")
                 calculate(billAmount, tipPorcentage: tipPorcentages[0], numberPeople: stepperNumberPeople.value)
                 display(tipPorcentages[0], totalBill: total, numberPeope: stepperNumberPeople.value)
-           }
+            }
         }
     }
 
@@ -101,6 +102,7 @@ class ViewController: UIViewController, DataEnteredDelegate {
             calculate(billAmount, tipPorcentage: tipPorcentage, numberPeople: stepperNumberPeople.value)
             display(tipPorcentage, totalBill: total, numberPeope: stepperNumberPeople.value)
         }
+        
     }
     
     @IBAction func onPushServiceRate(sender: AnyObject) {
@@ -152,8 +154,9 @@ class ViewController: UIViewController, DataEnteredDelegate {
         }
         
         previousDate = getDate()
-        defaults.setInteger(previousDate[0], forKey: "hour")
-        defaults.setInteger(previousDate[1], forKey: "minute")
+        defaults.setObject(previousDate, forKey: "Date")
+       // defaults.setInteger(previousDate[0], forKey: "hour")
+       // defaults.setInteger(previousDate[1], forKey: "minute")
         defaults.setDouble(Double(textFieldBillAmount.text!)!, forKey: "bill")
         defaults.setDouble(stepperNumberPeople.value, forKey: "numberPerson")
     }
@@ -164,15 +167,19 @@ class ViewController: UIViewController, DataEnteredDelegate {
         total = (billAmout + tip) / numberPeople
     }
     
-    func getDate() -> [Int] {
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Hour, .Minute, .Second, .Nanosecond], fromDate: date)
-        let hour = components.hour % 12
-        let minute = components.minute
-        let second = components.second
-        let nanosecond = components.nanosecond
-        return [Int(hour),Int(minute),Int(second),Int(nanosecond)]
+//    func getDate() -> [Int] {
+//        let date = NSDate()
+//        let calendar = NSCalendar.currentCalendar()
+//        let components = calendar.components([.Hour, .Minute, .Second, .Nanosecond], fromDate: date)
+//        let hour = components.hour % 12
+//        let minute = components.minute
+//        let second = components.second
+//        let nanosecond = components.nanosecond
+//        return [Int(hour),Int(minute),Int(second),Int(nanosecond)]
+//    }
+    
+    func getDate() -> NSDate{
+    return NSDate()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
